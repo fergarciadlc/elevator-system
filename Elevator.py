@@ -55,7 +55,7 @@ class Elevator:
             + f"\n[Current Floor]: {self.current_floor}"
             + f"\n[    State    ]: {self.motor}"
             + f"\n[    Door     ]: {self.door}"
-            + f"\n[Total of floors with Ground Level]: {len(self.buttons)}"
+            # + f"\n[Total of floors with Ground Level]: {len(self.buttons)}"
         )
 
 
@@ -102,8 +102,8 @@ class ElevatorSystem(Elevator):
 
 
 if __name__ == "__main__":
-    # e = Elevator(idx=1, number_of_floors=5)
-    # e.move_one_floor(MotorState.UP)
+    e = Elevator(idx=1, number_of_floors=5)
+    e.move_one_floor(MotorState.UP)
 
     es = ElevatorSystem(idx=1, number_of_floors=5)
     es.request_floor(3)

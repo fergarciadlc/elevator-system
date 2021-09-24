@@ -24,7 +24,7 @@ class Button:
             self._toggle_status()
 
     def __repr__(self) -> str:
-        return f"Generic Button: {self.status}"
+        return f"Generic Button: {'ON' if self.status else 'OFF'}"
 
 
 class ElevatorButton(Button):
@@ -69,3 +69,4 @@ if __name__ == "__main__":
     b = Button()
     e = ElevatorButton.from_number_of_floors(7)
     h = HallButtons.generate_hall_buttons()
+    print(b)
