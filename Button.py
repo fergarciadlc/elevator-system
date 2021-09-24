@@ -2,6 +2,12 @@ from enum import Enum
 
 
 class Button:
+    """Generic button class
+
+    Attributes:
+        status (bool): State of button, On (True) / OFF (False)
+    
+    """
     # status is equivalent to indicator led light
     def __init__(self) -> None:
         self.status = False
@@ -10,16 +16,17 @@ class Button:
         self.status = not self.status
 
     def press_button(self) -> None:
-        # self._toggle_status() ## original, user controls on and off
-        ## do I want to emulate one press??
+        """Method to press the button just if is has not been pressed before"""
         if not self.is_pressed:
             self._toggle_status()
 
     @property
     def is_pressed(self) -> bool:
+        """bool: Current state of button"""
         return self.status
 
     def deactivate(self) -> None:
+        """Deactivate button"""
         if self.status is not False:
             self._toggle_status()
 
@@ -28,6 +35,11 @@ class Button:
 
 
 class ElevatorButton(Button):
+    """ Elevator kind of button, inherits from Button class
+
+    Attributes:
+        floor_number (int): Button floor number
+    """
     def __init__(self, floor_number: int) -> None:
         super().__init__()
         self.floor_number = floor_number
@@ -38,6 +50,15 @@ class ElevatorButton(Button):
 
     @classmethod
     def from_number_of_floors(cls, number_of_floors: int) -> list:
+        """Generates a list of buttons depending on 
+        number of floors in building 
+
+        Args:
+            number_of_floors (int): Number of floors in building
+
+        Returns:
+            list: List of elevator buttons
+        """
         return [cls(n) for n in range(number_of_floors)]
 
     def __repr__(self) -> str:
@@ -51,15 +72,20 @@ class ButtonDirection(Enum):
 
 
 class HallButtons(Button):
+    """Hall/Floor buttons, inherits from Button class"""
     def __init__(self, direction: ButtonDirection) -> None:
         super().__init__()
         self.direction = direction
 
     @classmethod
-    def generate_hall_buttons(cls) -> dict:
+    def generate_hall_buttons(cls) -> "HallButtons":
+        """Generates a list of hall buttons for specified nummber of floors.
+
+        Returns:
+            class: Instance of a hall button|
+        """
         # return {"UP": cls(ButtonDirection.UP), "DOWN": cls(ButtonDirection.DOWN)}
         return cls(ButtonDirection.CALL)
-
 
     def __repr__(self) -> str:
         return f"Hall Button {self.direction}: {self.status}"

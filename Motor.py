@@ -8,10 +8,28 @@ class MotorState(Enum):
 
 
 class Motor:
+    """Generig elevator motor with states.
+
+    Attributes:
+        state (MotorState): Current state of motor
+
+    States:
+        IDLE: Motor not moving
+        UP: Motor moving up
+        DOWN: Motor moving down.
+    """
     def __init__(self, motor_state: MotorState = MotorState.IDLE) -> None:
         self.state = motor_state
 
     def set_state(self, motor_state) -> None:
+        """Change current state of motor
+
+        Args:
+            motor_state (MotorState): Motor states
+
+        Raises:
+            Exception: If state is not in current defined states
+        """
         if not isinstance(motor_state, MotorState):
             raise Exception(
                 f"{type(motor_state)} is not an instance of {type(MotorState)}"
@@ -19,6 +37,7 @@ class Motor:
         self.state = motor_state
 
     def stop(self) -> None:
+        """Stops motor"""
         self.state = MotorState.IDLE
 
     def __repr__(self) -> str:

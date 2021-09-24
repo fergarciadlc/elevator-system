@@ -5,6 +5,16 @@ import time
 
 
 class Elevator:
+    """Elevator entity for system
+
+    Attributes:
+        idx (str): ID of elevator
+        buttons (lsit): List of elevator buttons objects, 
+            depending on number of floors
+        motor (Motor): Elevator Motor object
+        door (Door): Elevator door
+        current_floor (int): Current elevator floor
+    """
     def __init__(self, idx: int, number_of_floors: int) -> None:
         self.idx = idx
         self.buttons = ElevatorButton.from_number_of_floors(number_of_floors)
@@ -13,6 +23,12 @@ class Elevator:
         self.current_floor = self.buttons[0].floor_number
 
     def open_and_close_door(self) -> None:
+        """Method to open the door when arriving to destination floor
+        then waits some seconds with the doors open and closes the door.
+
+        Raises:
+            Exception: Cannot open door if elevator is moving
+        """
         if self.motor.state is not MotorState.IDLE:
             raise Exception("Doors cannot open, elevator moving.")
         self.door.open_door()
@@ -22,6 +38,15 @@ class Elevator:
         print(self.door)
 
     def move_one_floor(self, direction: MotorState) -> None:
+        """Moves elevator one floor, up or down
+
+        Args:
+            direction (MotorState): Elevator/Motor direction
+
+        Raises:
+            Exception: Cannot move if door is open
+            Exception: Cannot go up if current floor is final, or down if is first floor
+        """
         str_direction_identifier = direction.name
         direction_mapping = {
             MotorState.UP: (-1, "final"),
@@ -60,12 +85,26 @@ class Elevator:
 
 
 class ElevatorSystem(Elevator):
+    """Elevator logic interface for its use with floor system, 
+    inherits from elevator
+
+    Attributes:
+        floors_list (list): list of floors in elevator
+    """
     def __init__(self, idx: int, number_of_floors: int) -> None:
         super().__init__(idx, number_of_floors)
 
         self.floors_list = tuple([button.floor_number for button in self.buttons])
 
     def request_floor(self, requested_floor_number: int):
+        """Request destination floor from elevator buttons
+
+        Args:
+            requested_floor_number (int): Requested floor number
+
+        Raises:
+            Exception: if requested floor is not in elevator
+        """
         if requested_floor_number not in self.floors_list:
             raise Exception(
                 f"Invalid requested floor: {requested_floor_number}, Elevator available floors: {self.floors_list}"
@@ -82,6 +121,13 @@ class ElevatorSystem(Elevator):
         self.open_and_close_door()
 
     def press_elevator_button(self, pressed_button: int):
+        """Method for press elevators buttons
+        Args:
+            pressed_button (int): Pressed elevator button
+
+        Raises:
+            Exception: If invalid requested button
+        """
         if pressed_button not in self.floors_list:
             raise Exception(f"Invallid requested button: {pressed_button}")
         self.buttons[pressed_button].press_button()
@@ -92,6 +138,7 @@ class ElevatorSystem(Elevator):
 
 
     def emergency_stop(self):
+        """Emergency stop, stops elevator and opens door"""
         self.motor.set_state(MotorState.IDLE)
         self.door.open_door()
         print("\n\nEMERGENCY STOP \n\n" + super().__repr__())
