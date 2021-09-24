@@ -1,4 +1,4 @@
-from Button import ElevatorButton, ButtonDirection
+from Button import ElevatorButton
 from Motor import Motor, MotorState
 from Door import Door
 import time
@@ -20,30 +20,6 @@ class Elevator:
         time.sleep(2)
         self.door.close_door()
         print(self.door)
-
-    # def move_up_one_floor(self) -> None:
-    #     if self.door.is_open:
-    #         raise Exception(f"Elevator cannot go UP, {self.door}.")
-    #     if self.current_floor is self.buttons[-1].floor_number:
-    #         raise Exception("Elevator cannot go UP, final floor.")
-    #     self.motor.set_state(MotorState.UP)
-    #     print(f"Elevator motor: {self.motor.state}")
-    #     time.sleep(0.5)
-    #     self.current_floor += 1
-    #     self.motor.set_state(MotorState.IDLE)
-    #     print(f"Elevator motor: {self.motor.state}")
-
-    # def move_down_one_floor(self) -> None:
-    #     if self.door.is_open:
-    #         raise Exception(f"Elevator cannot go DOWN, {self.door}.")
-    #     if self.current_floor is self.buttons[0].floor_number:
-    #         raise Exception("Elevator cannot go DOWN, initial floor.")
-    #     self.motor.set_state(MotorState.UP)
-    #     print(f"Elevator motor: {self.motor.state}")
-    #     time.sleep(0.5)
-    #     self.current_floor -= 1
-    #     self.motor.set_state(MotorState.IDLE)
-    #     print(f"Elevator motor: {self.motor.state}")
 
     def move_one_floor(self, direction: MotorState) -> None:
         str_direction_identifier = direction.name
@@ -83,6 +59,34 @@ class Elevator:
         )
 
 
+class ElevatorSystem(Elevator):
+    def __init__(self, idx: int, number_of_floors: int) -> None:
+        super().__init__(idx, number_of_floors)
+
+        self.floors_list = tuple([button.floor_number for button in self.buttons])
+
+    def request_floor(self, requested_floor_number: int):
+        if requested_floor_number not in self.floors_list:
+            raise Exception(
+                f"Invalid requested floor: {requested_floor_number}, Elevator available floors: {self.floors_list}"
+            )
+
+        direction = (
+            MotorState.UP
+            if self.current_floor < requested_floor_number
+            else MotorState.DOWN
+        )
+        while requested_floor_number != self.current_floor:
+            self.move_one_floor(direction)
+
+        self.open_and_close_door()
+
+    def __repr__(self) -> str:
+        return super().__repr__()
+
+
 if __name__ == "__main__":
     e = Elevator(idx=1, number_of_floors=5)
-    e.move_one_floor(MotorState.DOWN)
+    e.move_one_floor(MotorState.UP)
+
+    es = ElevatorSystem(idx=1, number_of_floors=5)
