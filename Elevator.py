@@ -17,7 +17,7 @@ class Elevator:
             raise Exception("Doors cannot open, elevator moving.")
         self.door.open_door()
         print(self.door)
-        time.sleep(2)
+        time.sleep(1)
         self.door.close_door()
         print(self.door)
 
@@ -71,22 +71,39 @@ class ElevatorSystem(Elevator):
                 f"Invalid requested floor: {requested_floor_number}, Elevator available floors: {self.floors_list}"
             )
 
-        direction = (
-            MotorState.UP
-            if self.current_floor < requested_floor_number
-            else MotorState.DOWN
-        )
+        if self.current_floor < requested_floor_number:
+            direction = MotorState.UP
+        else:
+            direction = MotorState.DOWN
+
         while requested_floor_number != self.current_floor:
             self.move_one_floor(direction)
 
         self.open_and_close_door()
+
+    def press_elevator_button(self, pressed_button: int):
+        if pressed_button not in self.floors_list:
+            raise Exception(f"Invallid requested button: {pressed_button}")
+        self.buttons[pressed_button].press_button()
+        print(self.buttons[pressed_button])
+        self.request_floor(pressed_button)
+        self.buttons[pressed_button].deactivate()
+        print(self.buttons[pressed_button])
+
+
+    def emergency_stop(self):
+        self.motor.set_state(MotorState.IDLE)
+        self.door.open_door()
+        print("\n\nEMERGENCY STOP \n\n" + super().__repr__())
+        return False
 
     def __repr__(self) -> str:
         return super().__repr__()
 
 
 if __name__ == "__main__":
-    e = Elevator(idx=1, number_of_floors=5)
-    e.move_one_floor(MotorState.UP)
+    # e = Elevator(idx=1, number_of_floors=5)
+    # e.move_one_floor(MotorState.UP)
 
     es = ElevatorSystem(idx=1, number_of_floors=5)
+    es.request_floor(3)

@@ -47,6 +47,7 @@ class ElevatorButton(Button):
 class ButtonDirection(Enum):
     UP = 1
     DOWN = 2
+    CALL = 3
 
 
 class HallButtons(Button):
@@ -56,7 +57,9 @@ class HallButtons(Button):
 
     @classmethod
     def generate_hall_buttons(cls) -> dict:
-        return {"UP": cls(ButtonDirection.UP), "DOWN": cls(ButtonDirection.DOWN)}
+        # return {"UP": cls(ButtonDirection.UP), "DOWN": cls(ButtonDirection.DOWN)}
+        return cls(ButtonDirection.CALL)
+
 
     def __repr__(self) -> str:
         return f"Hall Button {self.direction}: {self.status}"
