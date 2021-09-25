@@ -1,5 +1,8 @@
 from Floor import FloorSystem
 from Elevator import ElevatorSystem
+import Log as log
+
+logger = log.setup_logger()
 
 class ElevatorDispatcher:
     """ElevatorDispatcher:
@@ -40,6 +43,8 @@ class ElevatorDispatcher:
         closest_floor_elevator = cls._nearest_elevator(
             floor_by_elevator_list, floor_number
         )
+
+        logger.info(f"Selected Elevator: {elevators_by_floor[closest_floor_elevator].idx}")
 
         return elevators_by_floor[closest_floor_elevator]
 
