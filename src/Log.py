@@ -3,7 +3,7 @@ import logging
 root_logger = logging.getLogger("app")
 root_logger.setLevel(logging.INFO)
 formatter = logging.Formatter(
-    fmt="%(asctime)s - [%(filename)s:%(lineno)s - %(funcName)s ] - %(levelname)s - %(message)s"
+    fmt="%(asctime)s - [%(filename)s:%(module)s:%(lineno)s - %(funcName)s ] - %(levelname)s - %(message)s"
 )
 file_handler = logging.FileHandler("elevator_system.log")
 file_handler.setFormatter(formatter)

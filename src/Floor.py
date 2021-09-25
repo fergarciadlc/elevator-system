@@ -1,6 +1,8 @@
 from Button import HallButtons
 from Elevator import ElevatorSystem
+import Log as log
 
+logger = log.setup_logger()
 
 class Floor:
     """Generic floor class
@@ -51,9 +53,12 @@ class FloorSystem(Floor):
             raise Exception(
                 f"{elevator_system} is not an instance of {ElevatorSystem}"
             )
+        logger.info(f"Elevator requested from floor {self._floor_number}")
         self.buttons.press_button()
+        logger.info(f"Floor button {self.buttons}")
         elevator_system.request_floor(self._floor_number)
         self.buttons.deactivate()
+        logger.info(f"Floor button {self.buttons}")
 
     def __repr__(self) -> str:
         return super().__repr__()
