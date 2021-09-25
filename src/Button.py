@@ -62,7 +62,7 @@ class ElevatorButton(Button):
         return [cls(n) for n in range(number_of_floors)]
 
     def __repr__(self) -> str:
-        return f"Elevator button number {self.floor_number}: {self.status}"
+        return f"Elevator button number {self.floor_number}: {'ON' if self.status else 'OFF'}"
 
 
 class ButtonDirection(Enum):
@@ -88,7 +88,7 @@ class HallButtons(Button):
         return cls(ButtonDirection.CALL)
 
     def __repr__(self) -> str:
-        return f"Hall Button {self.direction}: {self.status}"
+        return f"Hall Button {self.direction}: {'ON' if self.status else 'OFF'}"
 
 
 if __name__ == "__main__":

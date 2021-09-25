@@ -6,8 +6,15 @@ import Log as log
 
 logger = log.setup_logger()
 
+def main():
+    logger.info("hola mundo")
+    elevator_1 = ElevatorSystem(idx=1, number_of_floors=5)
+    logger.info(elevator_1)
 
-if __name__ == "__main__":
+def run():
+    logger.info("otra")
+
+def test_run():
     """Main run function, demostrative behavior"""
     NUMBER_OF_FLOORS = 7
 
@@ -43,3 +50,8 @@ if __name__ == "__main__":
     elevator_1.door.close_door()
     elevator_1.move_one_floor(MotorState.DOWN)
     logger.info(elevator_1)
+
+if __name__ == "__main__":
+    # main()
+    # run()
+    test_run()

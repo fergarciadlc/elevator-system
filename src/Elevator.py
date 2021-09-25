@@ -2,6 +2,9 @@ from Button import ElevatorButton
 from Motor import Motor, MotorState
 from Door import Door
 import time
+import Log as log
+
+logger = log.setup_logger()
 
 
 class Elevator:
@@ -32,10 +35,12 @@ class Elevator:
         if self.motor.state is not MotorState.IDLE:
             raise Exception("Doors cannot open, elevator moving.")
         self.door.open_door()
-        print(self.door)
+        # print(self.door)
+        logger.info(self.door)
         time.sleep(1)
         self.door.close_door()
-        print(self.door)
+        # print(self.door)
+        logger.info(self.door)
 
     def move_one_floor(self, direction: MotorState) -> None:
         """Moves elevator one floor, up or down
@@ -64,7 +69,8 @@ class Elevator:
                 f"Elevator cannot go {str_direction_identifier}, {direction_mapping[direction][-1]} floor."
             )
         self.motor.set_state(direction)
-        print(f"Elevator motor: {self.motor.state}")
+        # print(f"Elevator motor: {self.motor.state}")
+        logger.info(f"Elevator motor: {self.motor.state}")
         time.sleep(0.5)
 
         if direction is MotorState.UP:
@@ -72,11 +78,12 @@ class Elevator:
         elif direction is MotorState.DOWN:
             self.current_floor -= 1
         self.motor.set_state(MotorState.IDLE)
-        print(f"Elevator motor: {self.motor.state}")
+        # print(f"Elevator motor: {self.motor.state}")
+        logger.info(f"Elevator motor: {self.motor.state}")
 
     def __repr__(self) -> str:
         return (
-            f"[ Elevator ID ]: {self.idx}"
+            f"\n[ Elevator ID ]: {self.idx}"
             + f"\n[Current Floor]: {self.current_floor}"
             + f"\n[    State    ]: {self.motor}"
             + f"\n[    Door     ]: {self.door}"
@@ -120,6 +127,14 @@ class ElevatorSystem(Elevator):
 
         self.open_and_close_door()
 
+    def activate_button(self, pressed_button: int) -> None:
+        self.buttons[pressed_button].press_button()
+        logger.info(self.buttons[pressed_button])
+
+    def deactivate_button(self, pressed_button: int) -> None:
+        self.buttons[pressed_button].deactivate()
+        logger.info(self.buttons[pressed_button])
+
     def press_elevator_button(self, pressed_button: int):
         """Method for press elevators buttons
         Args:
@@ -130,11 +145,16 @@ class ElevatorSystem(Elevator):
         """
         if pressed_button not in self.floors_list:
             raise Exception(f"Invallid requested button: {pressed_button}")
-        self.buttons[pressed_button].press_button()
-        print(self.buttons[pressed_button])
+        logger.info(
+            f"Pressed button {pressed_button} from elevator {self.idx}"
+        )
+        # self.buttons[pressed_button].press_button()
+        # logger.info(self.buttons[pressed_button])
+        self.activate_button(pressed_button)
         self.request_floor(pressed_button)
-        self.buttons[pressed_button].deactivate()
-        print(self.buttons[pressed_button])
+        self.deactivate_button(pressed_button)
+        # self.buttons[pressed_button].deactivate()
+        # logger.info(self.buttons[pressed_button])
 
 
     def emergency_stop(self):
