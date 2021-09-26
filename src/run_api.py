@@ -17,8 +17,9 @@ floors = FloorSystem.generate_floors(NUMBER_OF_FLOORS)
 
 elevators = {
     1: ElevatorSystem(idx=1, number_of_floors=NUMBER_OF_FLOORS),
-    2: ElevatorSystem(idx=2, number_of_floors=NUMBER_OF_FLOORS)
+    2: ElevatorSystem(idx=2, number_of_floors=NUMBER_OF_FLOORS),
 }
+
 
 def get_type(value):
     """Returns a dict with the type of its values,
@@ -75,7 +76,6 @@ def floor_action(floor_number: int):
 @app.route("/check/")
 def check_elevators():
     logger.info("Check state of elevators from API")
-    
 
     def elevator_api_parser(elevator: ElevatorSystem) -> dict:
         return {

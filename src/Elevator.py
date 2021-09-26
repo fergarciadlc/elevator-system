@@ -12,12 +12,13 @@ class Elevator:
 
     Attributes:
         idx (str): ID of elevator
-        buttons (lsit): List of elevator buttons objects, 
+        buttons (lsit): List of elevator buttons objects,
             depending on number of floors
         motor (Motor): Elevator Motor object
         door (Door): Elevator door
         current_floor (int): Current elevator floor
     """
+
     def __init__(self, idx: int, number_of_floors: int) -> None:
         self.idx = idx
         self.buttons = ElevatorButton.from_number_of_floors(number_of_floors)
@@ -92,12 +93,13 @@ class Elevator:
 
 
 class ElevatorSystem(Elevator):
-    """Elevator logic interface for its use with floor system, 
+    """Elevator logic interface for its use with floor system,
     inherits from elevator
 
     Attributes:
         floors_list (list): list of floors in elevator
     """
+
     def __init__(self, idx: int, number_of_floors: int) -> None:
         super().__init__(idx, number_of_floors)
 
@@ -145,9 +147,7 @@ class ElevatorSystem(Elevator):
         """
         if pressed_button not in self.floors_list:
             raise Exception(f"Invallid requested button: {pressed_button}")
-        logger.info(
-            f"Pressed button {pressed_button} from elevator {self.idx}"
-        )
+        logger.info(f"Pressed button {pressed_button} from elevator {self.idx}")
         # self.buttons[pressed_button].press_button()
         # logger.info(self.buttons[pressed_button])
         self.activate_button(pressed_button)
@@ -155,7 +155,6 @@ class ElevatorSystem(Elevator):
         self.deactivate_button(pressed_button)
         # self.buttons[pressed_button].deactivate()
         # logger.info(self.buttons[pressed_button])
-
 
     def emergency_stop(self):
         """Emergency stop, stops elevator and opens door"""

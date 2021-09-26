@@ -18,6 +18,7 @@ class Motor:
         UP: Motor moving up
         DOWN: Motor moving down.
     """
+
     def __init__(self, motor_state: MotorState = MotorState.IDLE) -> None:
         self.state = motor_state
 
