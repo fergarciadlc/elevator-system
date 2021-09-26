@@ -14,6 +14,8 @@ The main considerations are the following:
 The elevator can move only in the initialized number of floors and cannot move if the door is open.
 * **Monitoring system**: The overall system reports the actions into the console and into a LOG file, the logger was configured in the way that we know what methods/functions were executed and the state of the elevators.
 
+The system is a small implementation of the scheduling algorithm FCFS (First Come First Serve) because it executes requests in order that they were requested, although at this point it is still blocking mode, where you have to wait until the previous action finishes.
+
 ### Generalized elevator pseudocode 
 From inside the elevator:
 ```
