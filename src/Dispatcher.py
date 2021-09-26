@@ -4,10 +4,12 @@ import Log as log
 
 logger = log.setup_logger()
 
+
 class ElevatorDispatcher:
     """ElevatorDispatcher:
     Determines which elevator sent to a requested floor
     """
+
     @staticmethod
     def _nearest_elevator(elevator_floor_list: list, floor_number: int) -> int:
         """Select the nearest elevator from list of elevators list"""
@@ -33,7 +35,7 @@ class ElevatorDispatcher:
             "floor_number": "last_elevator_instance_in_floor",
             ...
         }
-        """        
+        """
         elevators_by_floor = {}
         for elevator in elevators_list:
             elevators_by_floor[elevator.current_floor] = elevator
@@ -44,7 +46,9 @@ class ElevatorDispatcher:
             floor_by_elevator_list, floor_number
         )
 
-        logger.info(f"Selected Elevator: {elevators_by_floor[closest_floor_elevator].idx}")
+        logger.info(
+            f"Selected Elevator: {elevators_by_floor[closest_floor_elevator].idx}"
+        )
 
         return elevators_by_floor[closest_floor_elevator]
 

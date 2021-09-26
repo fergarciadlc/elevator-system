@@ -4,6 +4,7 @@ import Log as log
 
 logger = log.setup_logger()
 
+
 class Floor:
     """Generic floor class
 
@@ -11,6 +12,7 @@ class Floor:
         _floor_number (int): Floor number
         buttons (list): List of hall buttons
     """
+
     def __init__(self, floor_number: int) -> None:
         self._floor_number = floor_number
         self.buttons = HallButtons.generate_hall_buttons()
@@ -37,6 +39,7 @@ class FloorSystem(Floor):
     Args:
         Floor (Floor): Current Floor object
     """
+
     def __init__(self, floor_number: int) -> None:
         super().__init__(floor_number)
 
@@ -50,9 +53,7 @@ class FloorSystem(Floor):
             Exception: If elevator_system is not an instance of ElevatorSystem
         """
         if not isinstance(elevator_system, ElevatorSystem):
-            raise Exception(
-                f"{elevator_system} is not an instance of {ElevatorSystem}"
-            )
+            raise Exception(f"{elevator_system} is not an instance of {ElevatorSystem}")
         logger.info(f"Elevator requested from floor {self._floor_number}")
         self.buttons.press_button()
         logger.info(f"Floor button {self.buttons}")
@@ -62,6 +63,7 @@ class FloorSystem(Floor):
 
     def __repr__(self) -> str:
         return super().__repr__()
+
 
 if __name__ == "__main__":
     f = Floor(2)

@@ -6,8 +6,9 @@ class Button:
 
     Attributes:
         status (bool): State of button, On (True) / OFF (False)
-    
+
     """
+
     # status is equivalent to indicator led light
     def __init__(self) -> None:
         self.status = False
@@ -35,11 +36,12 @@ class Button:
 
 
 class ElevatorButton(Button):
-    """ Elevator kind of button, inherits from Button class
+    """Elevator kind of button, inherits from Button class
 
     Attributes:
         floor_number (int): Button floor number
     """
+
     def __init__(self, floor_number: int) -> None:
         super().__init__()
         self.floor_number = floor_number
@@ -50,8 +52,8 @@ class ElevatorButton(Button):
 
     @classmethod
     def from_number_of_floors(cls, number_of_floors: int) -> list:
-        """Generates a list of buttons depending on 
-        number of floors in building 
+        """Generates a list of buttons depending on
+        number of floors in building
 
         Args:
             number_of_floors (int): Number of floors in building
@@ -73,6 +75,7 @@ class ButtonDirection(Enum):
 
 class HallButtons(Button):
     """Hall/Floor buttons, inherits from Button class"""
+
     def __init__(self, direction: ButtonDirection) -> None:
         super().__init__()
         self.direction = direction
