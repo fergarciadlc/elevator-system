@@ -31,8 +31,8 @@ Open door for some seconds
 Close door
 Repeat.
 ```
-## Running system
-The system was developed/tested with Python 3 (tested from 3.5 and 3.9) and can be tested in three different ways:
+# Running system
+The system was developed/tested with Python 3 (tested with 3.5, 3.8 and 3.9) and can be tested in three different ways:
 * `run.py` script
 * Interactive python console
 * API
@@ -40,16 +40,16 @@ The system was developed/tested with Python 3 (tested from 3.5 and 3.9) and can 
 Whichever the case, a `elevator_system.log` file will be generated with all the actions
 ### Script
 
-The script `run.py` shows an overall functionality of the system including some special cases:
+The `run.py` script shows an overall functionality of the system including some special cases:
 
 With python 3 run:
 ```bash
 python src/run.py
 ```
 ### Interactive python console
-Locate into src folder, start python interpreter or open an interactive console eg. ipython
+Locate into src folder, start python interpreter or open an interactive console, eg. `IPython`.
 
-Then import the modules, start an instance of classes and test behavior in real time:
+Then. import the modules, start an instance of classes and test behavior in real time:
 
 ```python
 from Motor import MotorState
@@ -72,22 +72,22 @@ floors[requested_floor].call_elevator_from_floor(
         requested_floor,  [elevator_1, elevator_2]
     )
 )
+elevator_1
 ```
 
 ## API
 
 A basic API/REST was implemented to run the system in an infinite loop, this provides a convenient simulation of the elevators and halls. The elevators can be monitored in real time.
 
-In order to run the API make sure to have Flask installed on your environment
+In order to run the API make sure to have Flask installed on your environment:
 
     pip install Flask
 
 **RUN API**
 
-    cd src
-    python run_api.py
+    python src/run_api.py
 
-Endpoints:
+### Endpoints:
 
 * **GET** - [http://127.0.0.1:5000/check](http://127.0.0.1:5000/check) - Check current state of elevators
 
@@ -95,8 +95,8 @@ Endpoints:
 
 * **POST** - [http://127.0.0.1:5000/elevator/](http://127.0.0.1:5000/elevator/) - JSON Body - Press floor button from inside elevator
 
-# Examples:
-## GET http://127.0.0.1:5000/check
+#### Examples:
+#### GET http://127.0.0.1:5000/check
 
 This endpoint shows the current state of elevators
 
@@ -118,7 +118,7 @@ $ curl http://127.0.0.1:5000/check/
 }
 ```
 
-## GET http://127.0.0.1:5000/call_elevator/floor/3
+#### GET http://127.0.0.1:5000/call_elevator/floor/3
 
 This endpoint request an elevator from a floor.
 
@@ -131,14 +131,14 @@ $ curl http://127.0.0.1:5000/call_elevator/floor/5
 ```
 You can use the previous endpoint con confirm that the nearest elevator changed to floor 5.
 
-## POST http://127.0.0.1:5000/check
+#### POST http://127.0.0.1:5000/check
 
 To simulate floor buttons from inside elevator you can send a POST request with the following json body:
 
 ```json
 {
-	"elevator_id": int number,
-	"button_press": int number
+    "elevator_id": 1,
+    "button_press": 1
 }
 ```
 
@@ -152,7 +152,7 @@ curl --location --request POST 'http://127.0.0.1:5000/elevator/' \
     "button_press": 2
 }'
 
->>{
+>> {
     "message": "Elevator 2 - button pressed: 2"
 }
 ```
@@ -163,7 +163,7 @@ The logs are served using the logging python package with the following formatte
 
     "%(asctime)s - [%(filename)s:%(module)s:%(lineno)s - %(funcName)s ] - %(levelname)s - %(message)s"
 
-Example of logs:
+**Example of logs**:
 
 ```log
 ...
