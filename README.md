@@ -158,7 +158,7 @@ curl --location --request POST 'http://127.0.0.1:5000/elevator/' \
 ```
 
 
-## Motoring
+## Monitoring System
 The logs are served using the logging python package with the following formatter:
 
     "%(asctime)s - [%(filename)s:%(module)s:%(lineno)s - %(funcName)s ] - %(levelname)s - %(message)s"
